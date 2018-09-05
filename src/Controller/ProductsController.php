@@ -28,6 +28,7 @@ class ProductsController extends AbstractController
         [
             'product_id' => $id ,
         ]);
+
     }
 
 }
