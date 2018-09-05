@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
+use App\Service\Products;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,11 +24,11 @@ class ProductsController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show($id)
+    public function show(Product $product)
     {
         return $this->render('products/show.html.twig' ,
         [
-            'product_id' => $id ,
+            'product' => $product
         ]);
 
     }
