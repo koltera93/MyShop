@@ -8,11 +8,12 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Validator\Tests\Fixtures\Entity;
+use Doctrine\ORM\Mapping\Entity;
 
 //use Doctrine\ORM\Mapping\Entity;
 
@@ -29,10 +30,16 @@ class Products
      */
     private $repo;
 
+    /**
+     * @var EntityRepository
+     */
+    private $categoriesRepo;
+
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $this->repo = $this->em->getRepository(Product::class);
+        $this->categoriesRepo = $this->em->getRepository(Category::class);
     }
 
 
@@ -57,5 +64,11 @@ class Products
     {
      return $this->repo->find($id);
     }
+
+    public function getAllCategories()
+    {
+        return $this->categoriesRepo->findAll();
+    }
+
 
 }
