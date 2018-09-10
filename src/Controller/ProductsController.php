@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Service\Products;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,7 +29,8 @@ class ProductsController extends AbstractController
         return $this->render('products/show.html.twig' ,
         [
             'product' => $product
-        ]);
+        ]
+        );
 
     }
 
