@@ -10,3 +10,6 @@ php bin/console doctrine:migrations:migrate
 
 
 base
+
+
+добавить привязку к product

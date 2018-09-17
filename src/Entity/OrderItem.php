@@ -5,7 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @ORM\Entity()
+ * @ORM\Table("order_item")
  */
 class OrderItem
 {
@@ -18,23 +19,31 @@ class OrderItem
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product" , inversedBy="orderItems")
      */
     private $Product;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $NumberOfOrderedItems;
+    private $NumberOfOrderedItems; //Колиество товаров
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Price;
+    private $Price; //Стоимость
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Value;
+    private $Value; //Цена
+
+    public function __construct()
+    {
+        $this->NumberOfOrderedItems = 0;
+        $this->Price = 0;
+        $this->Value = 0;
+    }
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="OrderItem")

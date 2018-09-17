@@ -7,10 +7,18 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Entity()
+ * @ORM\Table("order")
  */
 class Order
 {
+    const STATUS_NEW = 1;
+    const STATUS_ORDERED = 2;
+    const STATUS_SENT = 3;
+    const STATUS_RECEIVED = 4;
+
+
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -50,6 +58,10 @@ class Order
 
     public function __construct()
     {
+        $this-> dateOfCreation = new \DateTime();
+        $this-> status = self::STATUS_NEW;
+        $this-> StatusOfPayment = false;
+        $this-> amountOfOrder = 0;
         $this->OrderItem = new ArrayCollection();
     }
 
