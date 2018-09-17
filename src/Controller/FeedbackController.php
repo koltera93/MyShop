@@ -15,7 +15,7 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/feedback", name="feedback")
      */
-    public function index(Request $request, EntityManagerInterface $entitManager)
+    public function index(Request $request, EntityManagerInterface $entityManager)
     {
 
         $feedBackRequest = new FeedBackRequest();
@@ -32,8 +32,8 @@ class FeedbackController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $entitManager->persist($feedBackRequest);
-            $entitManager->flush();
+            $entityManager->persist($feedBackRequest);
+            $entityManager->flush();
 
             $this->addFlash('success' , 'Спасибо за обращение, мы обязательно с вами свяжемся!');
 
