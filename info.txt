@@ -13,3 +13,14 @@ base
 
 
 добавить привязку к product
+
+
+profile/edit
+
+
+show profile отобразить инфу из ProfileType
+
+vendor/friendofsymfony
+
+
+m:e OrderItem --regenerate

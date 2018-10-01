@@ -6,3 +6,9 @@ fos_user:
   from_email:
     address: norempty@shop.com
     sender_name: "Shop admin"
+
+  registration:
+    confirmation:
+      enabled: true
+    form:
+      type: App\Form\RegistrationType

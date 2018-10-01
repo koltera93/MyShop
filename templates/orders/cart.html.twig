@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Заказ №{{ cart.id }}</h1>
+
+    {% for item in cart.items %}
+    <tr>
+        <td>{{ item.product }}</td>
+        <td class="text-center">{{ cart.id }}</td>
+        <td class="text-center">{{ item.price }}</td>
+        <td class="text-center">{{ "Hello" }}</td>
+    </tr>
+    {% endfor %}
+
+{% endblock %}

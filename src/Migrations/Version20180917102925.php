@@ -16,7 +16,7 @@ final class Version20180917102925 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE order_item (id INT AUTO_INCREMENT NOT NULL, product VARCHAR(255) NOT NULL, number_of_ordered_items INT NOT NULL, price INT NOT NULL, value INT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE `order` CHANGE date_of_creation date_of_creation TIME NOT NULL');
+        $this->addSql('ALTER TABLE orders CHANGE date_of_creation date_of_creation TIME NOT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -25,6 +25,6 @@ final class Version20180917102925 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('DROP TABLE order_item');
-        $this->addSql('ALTER TABLE `order` CHANGE date_of_creation date_of_creation DATE NOT NULL');
+        $this->addSql('ALTER TABLE orders CHANGE date_of_creation date_of_creation DATE NOT NULL');
     }
 }

@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 
 
 class ProductsAdmin extends AbstractAdmin
@@ -40,7 +41,14 @@ class ProductsAdmin extends AbstractAdmin
             ->add('description')
             ->add('price')
             ->add('isTop')
-            ->add('category');
+            ->add('category')
+            ->add('images', CollectionType::class,
+                ['by_reference' => false,],
+            [
+                'edit' => 'inline',
+                'inline' => 'table',
+            ]
+            );
     }
 
 }

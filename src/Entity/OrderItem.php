@@ -18,7 +18,8 @@ class OrderItem
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var Product
+     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Product" , inversedBy="orderItems")
      */
     private $Product;
@@ -26,29 +27,33 @@ class OrderItem
     /**
      * @ORM\Column(type="integer")
      */
-    private $NumberOfOrderedItems; //Колиество товаров
+    private $quantity; //Колиество товаров
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $Price; //Стоимость
+    private $price; //Стоимость
 
     /**
      * @ORM\Column(type="integer")
      */
     private $Value; //Цена
 
+    /**
+     * @var Order
+     *
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     *
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $order;
+
     public function __construct()
     {
-        $this->NumberOfOrderedItems = 0;
-        $this->Price = 0;
+        $this->quantity = 0;
+        $this->price = 0;
         $this->Value = 0;
     }
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="OrderItem")
-     */
-    private $Items;
 
     public function getId(): ?int
     {
@@ -60,33 +65,55 @@ class OrderItem
         return $this->Product;
     }
 
-    public function setProduct(string $Product): self
+    public function setProduct(Product $product): self
     {
-        $this->Product = $Product;
+        $this->Product = $product;
+        $this->setPrice($product->getPrice());
 
         return $this;
     }
 
-    public function getNumberOfOrderedItems(): ?int
+    public function getQuantity(): ?int
     {
-        return $this->NumberOfOrderedItems;
+        return $this->quantity;
     }
 
-    public function setNumberOfOrderedItems(int $NumberOfOrderedItems): self
+    public function setQuantity(int $quantity): self
     {
-        $this->NumberOfOrderedItems = $NumberOfOrderedItems;
+        $this->quantity = $quantity;
+        $this->calculateCost();
+
+        return $this;
+    }
+
+    public function calculateCost()
+    {
+        $this->Value = $this->price * $this->quantity;
+
+        if($this->order)
+        {
+            $this->order->calculateAmount();
+        }
+
+    }
+
+    public function addQuantity(int $quantity): self
+    {
+        $this->quantity +=$quantity;
+        $this->calculateCost();
 
         return $this;
     }
 
     public function getPrice(): ?int
     {
-        return $this->Price;
+        return $this->price;
     }
 
     public function setPrice(int $Price): self
     {
-        $this->Price = $Price;
+        $this->price = $Price;
+        $this->calculateCost();
 
         return $this;
     }
@@ -103,15 +130,16 @@ class OrderItem
         return $this;
     }
 
-    public function getItems(): ?Order
+    public function getOrder(): ?Order
     {
-        return $this->Items;
+        return $this->order;
     }
 
-    public function setItems(?Order $Items): self
+    public function setOrder(?Order $order): self
     {
-        $this->Items = $Items;
+        $this->order = $order;
 
         return $this;
     }
+
 }

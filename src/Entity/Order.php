@@ -5,10 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @ORM\Entity()
- * @ORM\Table("order")
+ * @ORM\Table("orders")
  */
 class Order
 {
@@ -52,17 +53,21 @@ class Order
     private $amountOfOrder;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="Items")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order" ,
+     * orphanRemoval=true, indexBy="product_id" , cascade={"persist"})
+     *
+     * @var OrderItem[]
      */
-    private $OrderItem;
+    private $items;
 
     public function __construct()
     {
         $this-> dateOfCreation = new \DateTime();
         $this-> status = self::STATUS_NEW;
-        $this-> StatusOfPayment = false;
+        $this-> statusOfPayment = false;
         $this-> amountOfOrder = 0;
-        $this->OrderItem = new ArrayCollection();
+        $this-> items = new ArrayCollection();
+        $this->User = 0;
     }
 
 
@@ -134,32 +139,43 @@ class Order
     /**
      * @return Collection|OrderItem[]
      */
-    public function getOrderItem(): Collection
+    public function getItems(): Collection
     {
-        return $this->OrderItem;
+        return $this->items;
     }
 
-    public function addOrderItem(OrderItem $orderItem): self
+    public function addItem(OrderItem $orderItem): self
     {
-        if (!$this->OrderItem->contains($orderItem)) {
-            $this->OrderItem[] = $orderItem;
-            $orderItem->setItems($this);
+        if (!$this->items->contains($orderItem)) {
+            $this->items[] = $orderItem;
+            $orderItem->setOrder($this);
+            $this->calculateAmount();
         }
 
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): self
+    public function removeItem(OrderItem $orderItem): self
     {
-        if ($this->OrderItem->contains($orderItem)) {
-            $this->OrderItem->removeElement($orderItem);
+        if ($this->items->contains($orderItem)) {
+            $this->items->removeElement($orderItem);
             // set the owning side to null (unless already changed)
-            if ($orderItem->getItems() === $this) {
-                $orderItem->setItems(null);
+            if ($orderItem->getOrder() === $this) {
+                $orderItem->setOrder(null);
+                $this->calculateAmount();
             }
         }
 
         return $this;
     }
 
+    public function calculateAmount()
+    {
+        $this->amountOfOrder = 0;
+
+        foreach ($this->items as $item)
+        {
+            $this->amountOfOrder +=$item->getValue();
+        }
+    }
 }
