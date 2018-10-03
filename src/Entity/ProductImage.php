@@ -213,6 +213,10 @@ class ProductImage
         return $this;
     }
 
+
+    /**
+     * @Assert\Callback()
+     */
     public function validateFile(ExecutionContextInterface $context)
     {
         $constrain = new Assert\NotBlank();
@@ -220,6 +224,6 @@ class ProductImage
             ->getValidator()
             ->inContext($context)
             ->atPath('imageFile')
-            ->validate($this->fileName, $constrain, [Constraint::DEFAULT_GROUP]);
+            ->validate($this->fileName ?: $this->imageFile, $constrain, [Constraint::DEFAULT_GROUP]);
     }
 }
