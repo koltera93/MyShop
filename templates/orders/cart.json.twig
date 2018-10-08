@@ -1,0 +1,8 @@
+{
+    "amount": "{{ cart.amountOfOrder| localizedcurrency('UAH') }}",
+    "items":{
+        {% for item in cart.items  %}
+        "{{ item.id }}": "{{ item.value|localizedcurrency('UAH') }}" {% if not loop.last %},{% endif %}
+        {% endfor %}
+    }
+}

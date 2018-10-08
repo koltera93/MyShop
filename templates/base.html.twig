@@ -30,9 +30,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('categories') }}">Категории</a>
-                            <a class="dropdown-item" href="orders/cart.html.twig">Заказ</a>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="{{ path('cart') }}">Заказ</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ path('about') }}">О нас!</a>
                         </div>
@@ -49,12 +47,14 @@
                 <ul class="navbar nav my-1">
 
                    <li class=" js-nav-item">
-                       {{ render(controller('App\\Controller\\OrdersController::cartInHeader')) }}
+                       <a class="btn btn-outline-success my-2 my-sm-0 js-cart-in-header" href="{{ path('cart') }}"
+                            data-url="{{ path('orders_cart_in_header') }}">
+                           {{ render(controller('App\\Controller\\OrdersController::cartInHeader')) }} </a>
                    </li>
 
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li class="nav-item">
-                        <span class="navbar-text">
+                        <span class="navbar-text" href="">
                                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
                         </span>
                         </li>
@@ -91,7 +91,10 @@
                 src="https://code.jquery.com/jquery-3.3.1.min.js"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
                 crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script
+                src="http://code.jquery.com/jquery-3.3.1.min.js"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+                crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         <script src="{{ asset('assets/js/main.js') }}"></script>

@@ -3,7 +3,8 @@
         <div class="card">
 
             {% if product.images.first %}
-                    <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first , 'imageFile') | imagine_filter('squared_thumbnail') }}" alt="{{ product.name }}">
+                    <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first ,
+                        'imageFile') | imagine_filter('squared_thumbnail') }}" alt="{{ product.name }}">
             {% else %}
                     <img class="card-img-top" src="//placehold.it/250x250" alt="{{ product.name }}">
             {% endif %}

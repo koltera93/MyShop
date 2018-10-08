@@ -95,6 +95,20 @@ class Orders
         return $order;
     }
 
+    /**
+     * @param OrderItem $item
+     * @param int $quantity
+     * @return Order
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateItemQuantity(OrderItem $item, int $quantity): Order
+    {
+        $item->setQuantity($quantity);
+        $this->em->flush();
+
+        return $item->getOrder();
+    }
 
     /**
      * @param Order $order

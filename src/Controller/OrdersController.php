@@ -7,6 +7,7 @@ use App\Entity\OrderItem;
 use App\Entity\Product;
 use App\Service\Orders;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -53,7 +54,7 @@ class OrdersController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      *
-     * @@Route("/orders/cart-in-header" , name="orders-cart-in-header")
+     * @Route("/orders/cart-in-header" , name="orders_cart_in_header")
      */
     public function cartInHeader(Orders $orders)
     {
@@ -78,4 +79,31 @@ class OrdersController extends AbstractController
         return $this->render('orders/cart.html.twig',
             ['cart' => $cart]);
     }
+
+    /**
+     * @param OrderItem $item
+     * @param Orders $orders
+     * @param Request $request
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route("/cart/update-quantity/{id}", name="orders_update_item_quantity")
+     */
+    public function updateItemQuantity(OrderItem $item, Orders $orders, Request $request)
+    {
+        $quantity = (int)$request->request->get('quantity');
+
+        if ($quantity < 1 || $quantity > 1000)
+        {
+            throw new \InvalidArgumentException();
+        }
+
+        $cart = $orders->updateItemQuantity($item, $quantity);
+
+        return new JsonResponse(
+          $this->renderView('orders/cart.json.twig',
+              ['cart' => $cart]), 200, [], true
+        );
+    }
+
 }
