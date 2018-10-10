@@ -60,6 +60,36 @@ class Order
      */
     private $items;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $phone;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     */
+    private $user;
+
     public function __construct()
     {
         $this-> dateOfCreation = new \DateTime();
@@ -117,9 +147,18 @@ class Order
         return $this->User;
     }
 
-    public function setUser(string $User): self
+    public function setUser(?User $user): self
     {
-        $this->User = $User;
+        $this->User = $user;
+
+        if ($user)
+        {
+            $this->firstName = $user->getFirstName();
+            $this->lastName = $user->getLastName();
+            $this->email = $user->getEmail();
+            $this->address = $user->getAdress();
+            $this->phone = $user->getPhone();
+        }
 
         return $this;
     }
@@ -177,5 +216,65 @@ class Order
         {
             $this->amountOfOrder +=$item->getValue();
         }
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 }

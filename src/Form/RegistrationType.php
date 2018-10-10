@@ -24,6 +24,7 @@ class RegistrationType extends AbstractType
         $builder
             ->add('firstName', null, ['label' => 'label.firstName'])
             ->add('lastName', null, ['label' => 'label.lastName'])
+            ->add('phone', null, ['label' => 'label.phone'])
             ->add('adress', null, ['label' => 'label.adress'])
             ->remove('username');
     }
