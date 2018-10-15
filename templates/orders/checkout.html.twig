@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block body %}
+
+    <h1>Заказ №{{ cart.id }}</h1>
+
+
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Товар</td>
+        </tr>
+    </thead>
+
+
+        <tbody>
+        {% for item in cart.items %}
+            <tr data-item-id="{{ item.id }}">
+                <td>{{ item.product }}</td>
+                <td>{{ cart.id }}</td>
+                <td>{{ item.price|localizedcurrency('UAH') }}</td>
+                <td>{{ item.value|localizedcurrency('UAH') }}</td>
+               </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3">Всего</td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </div>
+
+    {{ form_end(form) }}
+{% endblock %}

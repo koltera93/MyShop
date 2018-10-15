@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -43,11 +43,6 @@ class Order
     private $statusOfPayment;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $User;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $amountOfOrder;
@@ -57,21 +52,26 @@ class Order
      * orphanRemoval=true, indexBy="product_id" , cascade={"persist"})
      *
      * @var OrderItem[]
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $items;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Email(groups={"MakeOrder"}, checkMX = true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $email;
 
@@ -82,11 +82,14 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
+     * @Assert\Regex(groups={"MakeOrder"}, pattern="/^\+\d{12}$/", message="Введите телефон в формате +380981234567")
      */
     private $phone;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="orders")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $user;
 
@@ -97,7 +100,6 @@ class Order
         $this-> statusOfPayment = false;
         $this-> amountOfOrder = 0;
         $this-> items = new ArrayCollection();
-        $this->User = 0;
     }
 
 
@@ -142,14 +144,14 @@ class Order
         return $this;
     }
 
-    public function getUser(): ?string
+    public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
     public function setUser(?User $user): self
     {
-        $this->User = $user;
+        $this->user = $user;
 
         if ($user)
         {

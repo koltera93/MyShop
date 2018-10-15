@@ -5,12 +5,14 @@
     <h1>Заказ №{{ cart.id }}</h1>
 
     <table class="table table-striped">
-        <thead>
+        <tbody id="cart-table">
         <tr>
             <td>Товар</td>
         </tr>
-        </thead>
+        </tbody>
+    </table>
 
+    <table class="table table-striped">
         <tbody id="cart-table">
         {% for item in cart.items %}
             <tr data-item-id="{{ item.id }}">
@@ -22,12 +24,10 @@
                            class="js-item-quantity"
                            data-update-url="{{ path('orders_update_item_quantity', {'id': item.id}) }}">
                 </td>
-                <td class="js-item-cost">{{ item.value|localizedcurrency('UAH') }}</td>
+                <td class="js-order-amount">{{ item.value|localizedcurrency('UAH') }}</td>
                 <td> <a class="js-remove-item" href="{{ path('orders_remove_item', {'id': item.id}) }}" title="Удалить из корзины!"> <i class="fas fa-trash"></i></a></td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('orders_checkout') }}" class="btn btn-primary">Оформить заказ</a>
 {% endblock %}

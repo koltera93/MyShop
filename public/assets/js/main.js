@@ -64,17 +64,18 @@ jQuery(function ($) {
         });
 
         function updateCart(cartData) {
+            updateCartInHeader();
             $me.find('.js-order-amount').html(cartData.amount);
 
             $.each(cartData.items, function (itemId, itemCost) {
-                var selector = '[data-item-id=' + itemId +']) .js-item-cost';
+                var selector = '[data-item-id=' + itemId +'] .js-item-cost';
 
                 $me.find(selector).html(itemCost);
             });
         }
     });
     
-    function updateCartIHeader() {
+    function updateCartInHeader() {
         var $cart = $('.js-cart-in-header');
 
         $cart.load($cart.data('url'));
