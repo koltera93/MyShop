@@ -69,7 +69,7 @@ class Order
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="email")
      * @Assert\Email(groups={"MakeOrder"}, checkMX = true)
      * @Assert\NotBlank(groups={"MakeOrder"})
      */

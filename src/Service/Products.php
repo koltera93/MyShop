@@ -62,7 +62,7 @@ class Products
 
     public function getById($id): ?Product
     {
-     return $this->repo->find($id);
+        return $this->repo->find($id);
     }
 
     public function getAllCategories()

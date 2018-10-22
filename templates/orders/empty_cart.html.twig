@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Ваш заказ пуст
+{% endblock %}
+
+{% block body %}
+    <h2>Ваша корзина пуста </h2>
+
+    <div class="form-group row">
+        <div>
+            <input type="button" onclick="history.back();" value="Вернуться на предыдущую страницу"/><br>
+            <a href="{{ path('homepage') }}">Перейти на главную страницу</a>
+        </div>
+    </div>
+{% endblock %}

@@ -41,8 +41,6 @@ class ProductImage
      *     originalName="originalName",
      *     dimensions="dimensions")
      *
-     * @Assert\NotBlank()
-     *
      */
     private $imageFile;
 

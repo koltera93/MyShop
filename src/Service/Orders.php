@@ -34,6 +34,11 @@ class Orders
 
     private $adminEmail;
 
+    /**
+     * @var Mailer
+     */
+    private $mailer;
+
     public function __construct(
         entityManagerInterface $entityManager,
         SessionInterface $session,
@@ -144,7 +149,9 @@ class Orders
         $order->setStatus(Order::STATUS_ORDERED);
         $this->em->flush();
         $this->mailer->send($this->adminEmail, 'orders/admin.email.twig', ['order' => $order]);
+        $this->mailer->send($order->getEmail(), 'orders/user.email.twig', ['order' => $order]);
     }
+
 
     /**
      * @param Order $order
@@ -172,4 +179,5 @@ class Orders
         $order->setStatusOfPayment(true);
         $this->em->flush();
     }
+
 }

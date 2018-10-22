@@ -168,24 +168,16 @@ class Product
         return $this;
     }
 
-    public function getShortDescription(): string
+    public function getShortDescription(): ?string
     {
-        if ( mb_strlen($this->description) <= 50)
+        if ( mb_strlen($this->description) <= 80)
         {
             return $this->description;
         }
 
-        $short = mb_substr($this->description, 0, 50);
-        $spacePosition = mb_substr($short, ' ');
+        $short = mb_substr($this->description, 0, 80);
 
-        if ($spacePosition === false)
-        {
-            return $short . '...';
-        }
-
-        $short = mb_substr($short, 0 , $spacePosition);
-
-        return $short . '...';
+        return $short;
 
     }
 }

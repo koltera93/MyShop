@@ -9,9 +9,9 @@
                     <img class="card-img-top" src="//placehold.it/250x250" alt="{{ product.name }}">
             {% endif %}
 
-            <div class="card-body">
+            <div class="card-body product-card">
                 <h5 class="card-title">{{ product.name }}</h5>
-                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text product-description">{{ product.description }}</p>
                 <p class="card-text">{{ product.price }} грн.</p>
                 <a href="{{ path('products_show', {'id': product.id}) }}" class=" js-btn btn-info">Подробнее</a>
                 <a href="{{ path('orders_add_to_cart', {'id': product.id, 'quantity': 1}) }}"

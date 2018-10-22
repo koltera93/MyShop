@@ -27,7 +27,7 @@ class OrderItem
     /**
      * @ORM\Column(type="integer")
      */
-    private $quantity; //Колиество товаров
+    private $quantity; //Количество товаров
 
     /**
      * @ORM\Column(type="integer")

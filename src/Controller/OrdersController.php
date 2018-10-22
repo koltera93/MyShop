@@ -10,6 +10,7 @@ use App\Service\Orders;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -72,14 +73,22 @@ class OrdersController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      *
+     * @throws
+     *
      * @Route("/orders/cart" , name="cart")
      */
     public function cart(Orders $orders)
     {
         $cart = $orders->getCartFromSession($this->getUser());
 
-        return $this->render('orders/cart.html.twig',
-            ['cart' => $cart]);
+        if ($cart->getAmountOfOrder() > 0) {
+            return $this->render('orders/cart.html.twig',
+                ['cart' => $cart]);
+        }
+        else
+        {
+            return $this->render('orders/empty_cart.html.twig');
+        }
     }
 
     /**
@@ -111,7 +120,7 @@ class OrdersController extends AbstractController
     /**
      * @param OrderItem $item
      * @param Orders $orders
-     * @return JsonResponse
+     * @return Response
      * @throws \Doctrine\ORM\ORMException
      * @throws
      *

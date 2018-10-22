@@ -21,6 +21,7 @@ class ProductImagesAdmin extends AbstractAdmin
         $form->add('imageFile' , VichImageType::class,
             [
                 'allow_delete' => false,
+                'required' => false,
             ]);
         $form->add('position');
     }

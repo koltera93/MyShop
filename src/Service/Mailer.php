@@ -3,6 +3,10 @@ namespace App\Service;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table("orders", name="orders")
+ */
 class Mailer
 {
     /**
@@ -20,6 +24,10 @@ class Mailer
      */
     private $senderEmail;
 
+    /**
+     * @var string
+     */
+    private $userEmail;
 
     public function __construct(\Swift_Mailer $mailer,\Twig_Environment $twig , ParameterBagInterface $parameterBag)
     {
@@ -46,6 +54,5 @@ class Mailer
 
         $this->mailer->send($message);
     }
-
 
 }

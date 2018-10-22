@@ -9,9 +9,12 @@
 
     <table class="table table-striped">
     <thead>
-        <tr>
-            <td>Товар</td>
-        </tr>
+    <tr>
+        <td>Товар</td>
+        <td>Количество</td>
+        <td>Цена</td>
+        <td>Стоимость</td>
+    </tr>
     </thead>
 
 
@@ -19,14 +22,14 @@
         {% for item in cart.items %}
             <tr data-item-id="{{ item.id }}">
                 <td>{{ item.product }}</td>
-                <td>{{ cart.id }}</td>
+                <td>{{ item.quantity }}</td>
                 <td>{{ item.price|localizedcurrency('UAH') }}</td>
                 <td>{{ item.value|localizedcurrency('UAH') }}</td>
                </tr>
         {% endfor %}
         <tr>
-            <td colspan="3">Всего</td>
-
+            <td colspan="3">Всего:</td>
+            <td> <a class="js-cart-in-header" >{{ cart.amountOfOrder|localizedcurrency('UAH')  }}</a></td>
         </tr>
         </tbody>
     </table>
